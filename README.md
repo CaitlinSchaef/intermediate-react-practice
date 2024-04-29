@@ -9,6 +9,7 @@ This is a template with the following:
 * $ `npm install`
 * $ `npm run dev`
 
+<!-- Have not done steps below -->
 
 ## production deploy to Vercel [https://vercel.com/]
 ### Vercel setup 

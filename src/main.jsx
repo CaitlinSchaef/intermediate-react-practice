@@ -5,16 +5,41 @@ import {
   RouterProvider,
   Outlet,
 } from 'react-router-dom'
+import { createContext } from 'react'
+import { useState } from 'react'
+import { useReducer } from 'react'
 
 // project styles
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
-import About from './About'
+
 import App from './App'
 import ErrorPage from './ErrorPage'
 import Header from './Header'
 import Footer from './Footer'
+import EditTeam from './EditTeam'
+
+
+
+// const [state, dispatch] = useReducer({playerName, countingHealth, countingSpeed, countingAttack}, {initialState})
+
+
+// export const ReducerContext = createContext()
+
+// const ReducerProvider = ({ children }) => {
+//   const [state, dispatch] = useReducer(reducer, initialState)
+//   return (
+//   <reducerContext.Provider value={{ state, dispatch }}>
+//   {children}
+//   </reducerContext.Provider>
+//   )
+//   }
+
+
+// const ReducerProvider = ({ children }) => {
+//  const [state, dispatch] = useReducer(countReducer, initialState)
+
 
 
 function Layout() {
@@ -40,8 +65,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />
       },
       {
-        path: '/about',
-        element: <About />
+        path: '/EditTeam',
+        element: <EditTeam />
       },
     ]
   }
