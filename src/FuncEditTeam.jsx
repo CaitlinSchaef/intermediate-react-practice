@@ -37,6 +37,7 @@ const initialState = {
 // this will change the player number?
 const teamReducer =  (state, action) => {
     switch(action.type) {
+        // This is how we adjust the player name, and we can only accept 4
       case 'addPlayer':
           console.log('addPlayer:', action)
           if (state.players.length < 4) {
@@ -90,11 +91,14 @@ const Body = () => {
                                 onChange={event => setNameText(event.target.value)}
                             /> 
                             <button onClick={() => dispatch({type: 'addPlayer', name: nameText})}>Submit</button>
-                        </Col>
-                        <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
+                            <br></br>
+                            <br>
+                            </br>
                             {state.players.map(player => (
                                 <div>{player.name}</div>
                             ))}
+                        </Col>
+                        <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
                             {/* <div>
                                 <h3><Players: /></h3>
                                 <CardWrapper:
