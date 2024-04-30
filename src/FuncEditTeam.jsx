@@ -14,8 +14,8 @@ import { useState } from "react";
 const initialState = {
     players:  [
         // {
-            // playerNumber: 0,
-            // name: '',
+            // name: '', should I make this value nameText?
+            // playerNumber: ,
             // health: 0,
             // attack: 0,
             // speed: 0
@@ -24,29 +24,32 @@ const initialState = {
 }
 // state will be: state.players 
 
-// const playerName = (state, action) => {
-//     if(state.name === ''){
-//         return false
-//     } else if (state.name === " " ) {
-//         return true 
-//     }
-// }
-
-
 
 // this will change the player number?
 const teamReducer =  (state, action) => {
     switch(action.type) {
-        // This is how we adjust the player name, and we can only accept 4
+        // This is how we add a player, and set it so as not to exceed 4
       case 'addPlayer':
           console.log('addPlayer:', action)
           if (state.players.length < 4) {
-              return {players:[...state.players, {name: action.name}] }
+              return {players:[...state.players, {playerNumber: state.players.length + 1, name: action.name, health: 3, attack: 3, speed: 3}] }
             }
             else if(state.players.length >= 4) {
                 return state
             } 
-        // case 'changeName':
+        case 'increaseHealthByOne':
+            return { health: state.health + 1 }
+          case 'decreaseHealthByOne':
+            console.log('decreaseByOne:', action)
+            return {players: state.players.map(el => {
+                console.log('the Array Map Number', el.playerNumber, ' vs ', 'the magic number of the click button dispatch',action.who)
+                if (el.playerNumber === action.who) {
+                    el.health = el.health - 1 
+                }
+                return (el)
+
+            })}
+        // case 'changeHealth':
         //     return { input: state.name = ''}
             //   case 'reset':
             //     return initialState
@@ -55,19 +58,6 @@ const teamReducer =  (state, action) => {
     }
 }
 
-// const playerDisplay = 
-//                                 <Card style={{ width: '18rem' }}>
-//                                     <Card.Body>
-//                                         <Card.Title>{Player#}</Card.Title>
-//                                         <Card.Text>
-//                                         {Player Name}
-//                                         {Health: }
-//                                         {Attack: }
-//                                         {Speed: }
-//                                         </Card.Text>
-//                                         <Button variant="primary">Go somewhere</Button>
-//                                     </Card.Body>
-//                                 </Card>
 
 //nameText will be provided by whatever is typed in the input
 const Body = () => {
@@ -83,26 +73,37 @@ const Body = () => {
             <div>
                 <Container className="mt-3 mb-3 ms-3 me-3">
                     <Row className="justify-content-md-center">
-                    {/* Putting the class name for CSS on the column is what allows for customization of the text background
-                    had to make xs=12 so that it was full width on the smallest screen */}
                         <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
+                            <h3>Input Name: </h3>
                             <input
                                 value={nameText}
                                 onChange={event => setNameText(event.target.value)}
-                            /> 
+                                /> 
                             <button onClick={() => dispatch({type: 'addPlayer', name: nameText})}>Submit</button>
                             <br></br>
                             <br>
                             </br>
                             {state.players.map(player => (
-                                <div>{player.name}</div>
+                                <div key={player.playerNumber}>
+                                    <div className="">
+                                        {player.name} {player.playerNumber}
+                                    </div>
+                                    <button onClick={() => dispatch({type: 'decreaseHealthByOne', who: player.playerNumber})}>Subtract</button>
+                                    Health: {player.health}
+                                    <button onClick={() => dispatch({type: 'increaseHealthByOne', health: health + 1})}>Add</button>
+
+                                </div>
                             ))}
                         </Col>
                         <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
-                            {/* <div>
-                                <h3><Players: /></h3>
-                                <CardWrapper:
-                            </div> */}
+                            <div>
+                                <h3>Stats: </h3>
+                               <Container>
+                                 <h5>Health: </h5> {/*I think it will be like {health} after the word health*/}
+                                <h5>Attack: </h5>
+                                <h5>Speed: </h5>
+                               </Container>
+                            </div>
 
                         </Col>
                     </Row>
@@ -124,29 +125,46 @@ function FuncEditTeam() {
 
 export default FuncEditTeam
 
+
+// const playerDisplay = 
+//                                 <Card style={{ width: '18rem' }}>
+//                                     <Card.Body>
+//                                         <Card.Title>{Player#}</Card.Title>
+//                                         <Card.Text>
+//                                         {Player Name}
+//                                         {Health: }
+//                                         {Attack: }
+//                                         {Speed: }
+//                                         </Card.Text>
+//                                         <Button variant="primary">Go somewhere</Button>
+//                                     </Card.Body>
+//                                 </Card>
+
+
+
 // const Buttons = () => {
-//     return (
-//         <ButtonGroup aria-label="Stat Adjuster"> 
-//                 <button variant="secondary"
-//                     style={{ margin: 10 }}
-//                     onClick={() => dispatch({ type: 'increaseByOne' })}
-//                     >
-//                     Increase 
-//                     </button>
-
-//                     <button variant="secondary"
-//                     style={{ margin: 10 }}
-//                     onClick={() => dispatch({ type: 'reset' })}
-//                     >
-//                     Reset Value 
-//                     </button>
-
-//                 <button variant="secondary"
-//                     style={{ margin: 10 }}
-//                     onClick={() => dispatch({ type: 'decreaseByOne' })}
-//                     >
-//                     Decrease 
-//                     </button>
-//                 </ButtonGroup>
-//     )
-// }
+    //     return (
+        //         <ButtonGroup aria-label="Stat Adjuster"> 
+        //                 <button variant="secondary"
+        //                     style={{ margin: 10 }}
+        //                     onClick={() => dispatch({ type: 'increaseByOne' })}
+        //                     >
+        //                     Increase 
+        //                     </button>
+        
+        //                     <button variant="secondary"
+        //                     style={{ margin: 10 }}
+        //                     onClick={() => dispatch({ type: 'reset' })}
+        //                     >
+        //                     Reset Value 
+        //                     </button>
+        
+        //                 <button variant="secondary"
+        //                     style={{ margin: 10 }}
+        //                     onClick={() => dispatch({ type: 'decreaseByOne' })}
+        //                     >
+        //                     Decrease 
+        //                     </button>
+        //                 </ButtonGroup>
+        //     )
+        // }
