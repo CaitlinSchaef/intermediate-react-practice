@@ -19,26 +19,8 @@ import ErrorPage from './ErrorPage'
 import Header from './Header'
 import Footer from './Footer'
 import EditTeam from './EditTeam'
+import { initialState, teamReducer } from './FuncEditTeam'
 
-
-
-// const [state, dispatch] = useReducer({playerName, countingHealth, countingSpeed, countingAttack}, {initialState})
-
-
-// export const ReducerContext = createContext()
-
-// const ReducerProvider = ({ children }) => {
-//   const [state, dispatch] = useReducer(reducer, initialState)
-//   return (
-//   <reducerContext.Provider value={{ state, dispatch }}>
-//   {children}
-//   </reducerContext.Provider>
-//   )
-//   }
-
-
-// const ReducerProvider = ({ children }) => {
-//  const [state, dispatch] = useReducer(countReducer, initialState)
 
 
 
@@ -72,6 +54,20 @@ const router = createBrowserRouter([
   }
 ])
 
+export const TeamContext = createContext()
+
+
+const TeamProvider = ({children}) => {
+  const [state, dispatch] = useReducer(teamReducer, initialState)
+  return (
+    <TeamContext.Provider value={{state, dispatch}}>
+      {children}
+    </TeamContext.Provider>
+  )
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <TeamProvider>
+    <RouterProvider router={router} />
+  </TeamProvider>
 )

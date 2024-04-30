@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import ThemeProvider from 'react-bootstrap/ThemeProvider'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card';
 import { useState } from "react";
+import { TeamContext } from "./main";
 
 
 //has to be a key value pair since it's an object, added players: 
-const initialState = {
+export const initialState = {
     players:  [
         // {
             // name: '', should I make this value nameText?
@@ -26,7 +27,7 @@ const initialState = {
 
 
 // this will change the player number?
-const teamReducer =  (state, action) => {
+export const teamReducer =  (state, action) => {
     switch(action.type) {
         // This is how we add a player, and set it so as not to exceed 4
       case 'addPlayer':
@@ -109,7 +110,7 @@ const teamReducer =  (state, action) => {
 
 //nameText will be provided by whatever is typed in the input
 const Body = () => {
-    const [state, dispatch] = useReducer(teamReducer, initialState)
+    const {state, dispatch} = useContext(TeamContext)
     console.log('state:', state)
     const [nameText, setNameText] = useState('')
 
