@@ -37,8 +37,17 @@ const teamReducer =  (state, action) => {
             else if(state.players.length >= 4) {
                 return state
             } 
+
+        // attached to increase health button to add 1
         case 'increaseHealthByOne':
-            return { health: state.health + 1 }
+            return {players: state.players.map(el => {
+                if (el.playerNumber === action.who) {
+                    el.health = el.health + 1
+                }
+                return (el)
+
+            })}
+        // attached to decrease health button to subtract 1
           case 'decreaseHealthByOne':
             console.log('decreaseByOne:', action)
             return {players: state.players.map(el => {
@@ -49,10 +58,49 @@ const teamReducer =  (state, action) => {
                 return (el)
 
             })}
-        // case 'changeHealth':
-        //     return { input: state.name = ''}
-            //   case 'reset':
-            //     return initialState
+
+            // attached to increase attack button to add 1
+            case 'increaseAttackByOne':
+            return {players: state.players.map(el => {
+                if (el.playerNumber === action.who) {
+                    el.attack = el.attack + 1
+                }
+                return (el)
+
+            })}
+            // attached to decrease attack button to subtract 1
+          case 'decreaseAttackByOne':
+            console.log('decreaseByOne:', action)
+            return {players: state.players.map(el => {
+                console.log('the Array Map Number', el.playerNumber, ' vs ', 'the magic number of the click button dispatch',action.who)
+                if (el.playerNumber === action.who) {
+                    el.attack = el.attack - 1 
+                }
+                return (el)
+
+            })}
+
+             // attached to increase speed button to add 1
+             case 'increaseSpeedByOne':
+                return {players: state.players.map(el => {
+                    if (el.playerNumber === action.who) {
+                        el.speed = el.speed + 1
+                    }
+                    return (el)
+    
+                })}
+                // attached to decrease speed button to subtract 1
+              case 'decreaseSpeedByOne':
+                console.log('decreaseByOne:', action)
+                return {players: state.players.map(el => {
+                    console.log('the Array Map Number', el.playerNumber, ' vs ', 'the magic number of the click button dispatch',action.who)
+                    if (el.playerNumber === action.who) {
+                        el.speed = el.speed - 1 
+                    }
+                    return (el)
+    
+                })}
+       
             default:
                 throw new Error('Oh No!!!')
     }
@@ -83,28 +131,26 @@ const Body = () => {
                             <br></br>
                             <br>
                             </br>
+                            
                             {state.players.map(player => (
                                 <div key={player.playerNumber}>
-                                    <div className="">
+                                    <div>
                                         {player.name} {player.playerNumber}
                                     </div>
                                     <button onClick={() => dispatch({type: 'decreaseHealthByOne', who: player.playerNumber})}>Subtract</button>
                                     Health: {player.health}
-                                    <button onClick={() => dispatch({type: 'increaseHealthByOne', health: health + 1})}>Add</button>
+                                    <button onClick={() => dispatch({type: 'increaseHealthByOne', who: player.playerNumber})}>Add</button>
 
+                                    <button onClick={() => dispatch({type: 'decreaseAttackByOne', who: player.playerNumber})}>Subtract</button>
+                                    Attack: {player.attack}
+                                    <button onClick={() => dispatch({type: 'increaseAttackByOne', who: player.playerNumber})}>Add</button>
+
+                                    <button onClick={() => dispatch({type: 'decreaseSpeedByOne', who: player.playerNumber})}>Subtract</button>
+                                    Speed: {player.speed}
+                                    <button onClick={() => dispatch({type: 'increaseSpeedByOne', who: player.playerNumber})}>Add</button>
                                 </div>
                             ))}
-                        </Col>
-                        <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
-                            <div>
-                                <h3>Stats: </h3>
-                               <Container>
-                                 <h5>Health: </h5> {/*I think it will be like {health} after the word health*/}
-                                <h5>Attack: </h5>
-                                <h5>Speed: </h5>
-                               </Container>
-                            </div>
-
+                          
                         </Col>
                     </Row>
                 </Container>
@@ -124,47 +170,3 @@ function FuncEditTeam() {
 
 
 export default FuncEditTeam
-
-
-// const playerDisplay = 
-//                                 <Card style={{ width: '18rem' }}>
-//                                     <Card.Body>
-//                                         <Card.Title>{Player#}</Card.Title>
-//                                         <Card.Text>
-//                                         {Player Name}
-//                                         {Health: }
-//                                         {Attack: }
-//                                         {Speed: }
-//                                         </Card.Text>
-//                                         <Button variant="primary">Go somewhere</Button>
-//                                     </Card.Body>
-//                                 </Card>
-
-
-
-// const Buttons = () => {
-    //     return (
-        //         <ButtonGroup aria-label="Stat Adjuster"> 
-        //                 <button variant="secondary"
-        //                     style={{ margin: 10 }}
-        //                     onClick={() => dispatch({ type: 'increaseByOne' })}
-        //                     >
-        //                     Increase 
-        //                     </button>
-        
-        //                     <button variant="secondary"
-        //                     style={{ margin: 10 }}
-        //                     onClick={() => dispatch({ type: 'reset' })}
-        //                     >
-        //                     Reset Value 
-        //                     </button>
-        
-        //                 <button variant="secondary"
-        //                     style={{ margin: 10 }}
-        //                     onClick={() => dispatch({ type: 'decreaseByOne' })}
-        //                     >
-        //                     Decrease 
-        //                     </button>
-        //                 </ButtonGroup>
-        //     )
-        // }
