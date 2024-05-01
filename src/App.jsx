@@ -27,7 +27,13 @@ const Body = () => {
           {/* Putting the class name for CSS on the column is what allows for customization of the text background
           had to make xs=12 so that it was full width on the smallest screen */}
           <Col xs={6} md={4} className="justify-content-center mb-3 text-center">
-            {state.players.map()}
+            {state.players.map(player => (
+                                <div key={player.playerNumber}>
+                                    <div>
+                                     Player {player.playerNumber}  Name: {player.name} Health: {player.health} Attack: {player.attack} Speed: {player.speed}
+                                    </div>
+                                </div>
+                            ))}
           </Col>
         </Row>
       </Container>

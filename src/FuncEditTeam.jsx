@@ -136,19 +136,23 @@ const Body = () => {
                             {state.players.map(player => (
                                 <div key={player.playerNumber}>
                                     <div>
-                                        {player.name} {player.playerNumber}
+                                       Player {player.playerNumber}: {player.name}
                                     </div>
+                                    <div className="m-2">
                                     <button onClick={() => dispatch({type: 'decreaseHealthByOne', who: player.playerNumber})}>Subtract</button>
                                     Health: {player.health}
                                     <button onClick={() => dispatch({type: 'increaseHealthByOne', who: player.playerNumber})}>Add</button>
-
+                                    </div>
+                                    <div className="m-2">
                                     <button onClick={() => dispatch({type: 'decreaseAttackByOne', who: player.playerNumber})}>Subtract</button>
                                     Attack: {player.attack}
                                     <button onClick={() => dispatch({type: 'increaseAttackByOne', who: player.playerNumber})}>Add</button>
-
+                                    </div>
+                                    <div className="m-2">
                                     <button onClick={() => dispatch({type: 'decreaseSpeedByOne', who: player.playerNumber})}>Subtract</button>
                                     Speed: {player.speed}
                                     <button onClick={() => dispatch({type: 'increaseSpeedByOne', who: player.playerNumber})}>Add</button>
+                                    </div>
                                 </div>
                             ))}
                           
